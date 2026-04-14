@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Car {
-    private final int year;
-    private final String color;
-    private final List<Wheel> wheels;
-    private final Engine engine;
+    private int year;
+    private String color;
+    private List<Wheel> wheels;
+    private Engine engine;
 
     public Car(int year, String color, List<Wheel> wheels, Engine engine) {
         this.year = year;
@@ -17,45 +17,31 @@ public final class Car {
         this.wheels = new ArrayList<>();
         if (wheels != null) {
             for (Wheel w : wheels) {
-                this.wheels.add(new Wheel(w));
+                this.wheels.add(w.clone());
             }
         }
 
-        this.engine = engine == null ? null : new Engine(engine);
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public List<Wheel> getWheels() {
-        List<Wheel> copy = new ArrayList<>();
-        for (Wheel w : wheels) {
-            copy.add(new Wheel(w));
-        }
-        return copy;
-    }
-
-    public Engine getEngine() {
-        return engine == null ? null : new Engine(engine);
+        this.engine = engine == null ? null : engine.clone();
     }
 
     public Car changeEngine(Engine engine) {
-        return new Car(this.year, this.color, this.wheels, engine);
+        this.engine = engine.clone();
+        return this;
     }
 
     public Car changeColor(String newColor) {
-        return new Car(this.year, newColor, this.wheels, this.engine);
+        this.color = newColor;
+        return this;
     }
 
     public Car addWheel(Wheel newWheel) {
-        List<Wheel> newWheels = new ArrayList<>(this.wheels);
-        newWheels.add(new Wheel(newWheel));
-        return new Car(this.year, this.color, newWheels, this.engine);
+        this.wheels.add(newWheel.clone());
+        return this;
+    }
+
+    @Override
+    public Car clone() {
+        return new Car(year, color, wheels, engine);
     }
 
     @Override

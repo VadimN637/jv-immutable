@@ -1,19 +1,12 @@
 package core.basesyntax;
 
-import java.util.Objects;
-
-public final class Engine {
-    private final int horsePower;
-    private final String manufacturer;
+public class Engine implements Cloneable {
+    private int horsePower;
+    private String manufacturer;
 
     public Engine(int horsePower, String manufacturer) {
         this.horsePower = horsePower;
         this.manufacturer = manufacturer;
-    }
-
-    public Engine(Engine other) {
-        this.horsePower = other.horsePower;
-        this.manufacturer = other.manufacturer;
     }
 
     public int getHorsePower() {
@@ -24,26 +17,22 @@ public final class Engine {
         return manufacturer;
     }
 
+    // TESTS REQUIRE setters
+    public void setHorsePower(int horsePower) {
+        this.horsePower = horsePower;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    @Override
+    public Engine clone() {
+        return new Engine(this.horsePower, this.manufacturer);
+    }
+
     public Engine changeEngine(Engine engine) {
-        return new Engine(engine);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Engine engine = (Engine) o;
-        return horsePower == engine.horsePower
-                && Objects.equals(manufacturer, engine.manufacturer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(horsePower, manufacturer);
+        return engine.clone();
     }
 
     @Override
