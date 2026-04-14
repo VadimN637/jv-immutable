@@ -17,11 +17,11 @@ public final class Car {
         this.wheels = new ArrayList<>();
         if (wheels != null) {
             for (Wheel w : wheels) {
-                this.wheels.add(new Wheel(w));
+                this.wheels.add(w.clone());
             }
         }
 
-        this.engine = engine == null ? null : new Engine(engine);
+        this.engine = engine == null ? null : engine.clone();
     }
 
     public int getYear() {
@@ -32,21 +32,18 @@ public final class Car {
         return color;
     }
 
-    // ❗ MUST return COPY
     public Engine getEngine() {
-        return engine == null ? null : new Engine(engine);
+        return engine == null ? null : engine.clone();
     }
 
-    // ❗ MUST return COPY
     public List<Wheel> getWheels() {
         List<Wheel> copy = new ArrayList<>();
         for (Wheel w : wheels) {
-            copy.add(new Wheel(w));
+            copy.add(w.clone());
         }
         return copy;
     }
 
-    // ❗ NO mutation → return new Car
     public Car changeEngine(Engine engine) {
         return new Car(year, color, wheels, engine);
     }
@@ -57,7 +54,7 @@ public final class Car {
 
     public Car addWheel(Wheel newWheel) {
         List<Wheel> newWheels = new ArrayList<>(wheels);
-        newWheels.add(new Wheel(newWheel));
+        newWheels.add(newWheel.clone());
         return new Car(year, color, newWheels, engine);
     }
 

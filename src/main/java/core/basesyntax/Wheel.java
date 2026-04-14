@@ -1,20 +1,23 @@
 package core.basesyntax;
 
-import java.util.Objects;
-
-public final class Wheel {
-    private final int radius;
+public class Wheel implements Cloneable {
+    private int radius;
 
     public Wheel(int radius) {
         this.radius = radius;
     }
 
-    public Wheel(Wheel other) {
-        this.radius = other.radius;
-    }
-
     public int getRadius() {
         return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public Wheel clone() {
+        return new Wheel(radius);
     }
 
     @Override
@@ -22,7 +25,7 @@ public final class Wheel {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Wheel)) {
             return false;
         }
         Wheel wheel = (Wheel) o;
@@ -31,6 +34,6 @@ public final class Wheel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(radius);
+        return java.util.Objects.hash(radius);
     }
 }
