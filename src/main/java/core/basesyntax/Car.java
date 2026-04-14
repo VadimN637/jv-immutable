@@ -17,11 +17,15 @@ public final class Car {
         this.wheels = new ArrayList<>();
         if (wheels != null) {
             for (Wheel w : wheels) {
-                this.wheels.add(w.clone());
+                if (w != null) {
+                    this.wheels.add(new Wheel(w.getRadius()));
+                }
             }
         }
 
-        this.engine = engine == null ? null : engine.clone();
+        this.engine = engine == null
+                ? null
+                : new Engine(engine.getHorsePower(), engine.getManufacturer());
     }
 
     public int getYear() {
@@ -33,13 +37,15 @@ public final class Car {
     }
 
     public Engine getEngine() {
-        return engine == null ? null : engine.clone();
+        return engine == null
+                ? null
+                : new Engine(engine.getHorsePower(), engine.getManufacturer());
     }
 
     public List<Wheel> getWheels() {
         List<Wheel> copy = new ArrayList<>();
         for (Wheel w : wheels) {
-            copy.add(w.clone());
+            copy.add(new Wheel(w.getRadius()));
         }
         return copy;
     }
@@ -54,18 +60,14 @@ public final class Car {
 
     public Car addWheel(Wheel newWheel) {
         List<Wheel> newWheels = new ArrayList<>(wheels);
-        newWheels.add(newWheel.clone());
+        newWheels.add(new Wheel(newWheel.getRadius()));
         return new Car(year, color, newWheels, engine);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Car)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Car)) return false;
         Car car = (Car) o;
         return year == car.year
                 && Objects.equals(color, car.color)
