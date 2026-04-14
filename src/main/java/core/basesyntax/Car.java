@@ -24,6 +24,29 @@ public final class Car {
         this.engine = engine == null ? null : engine.clone();
     }
 
+    // ✅ REQUIRED GETTERS (fix your error)
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public Engine getEngine() {
+        return engine == null ? null : engine.clone();
+    }
+
+    public List<Wheel> getWheels() {
+        List<Wheel> copy = new ArrayList<>();
+        for (Wheel w : wheels) {
+            copy.add(w.clone());
+        }
+        return copy;
+    }
+
+    // "immutable-style" updates (as tests expect)
     public Car changeEngine(Engine engine) {
         this.engine = engine.clone();
         return this;
