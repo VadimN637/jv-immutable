@@ -20,6 +20,8 @@ public final class Car {
             for (Wheel wheel : wheels) {
                 if (wheel != null) {
                     this.wheels.add(new Wheel(wheel.getRadius()));
+                } else {
+                    this.wheels.add(null);
                 }
             }
         }
@@ -49,11 +51,9 @@ public final class Car {
 
     public List<Wheel> getWheels() {
         List<Wheel> copy = new ArrayList<>();
-
         for (Wheel wheel : wheels) {
-            copy.add(new Wheel(wheel.getRadius()));
+            copy.add(wheel != null ? new Wheel(wheel.getRadius()) : null);
         }
-
         return copy;
     }
 
