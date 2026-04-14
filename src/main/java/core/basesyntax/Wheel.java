@@ -1,14 +1,35 @@
 package core.basesyntax;
 
-public class Wheel {
-    private int radius;
+public final class Wheel {
+    private final int radius;
 
-    //implement this class
+    public Wheel(int radius) {
+        this.radius = radius;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public Wheel(Wheel other) {
+        this.radius = other.radius;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Wheel wheel = (Wheel) o;
+        return radius == wheel.radius;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(radius);
+    }
 
     @Override
     public String toString() {
-        return "Wheel{"
-            + "radius=" + radius
-            + '}';
+        return "Wheel{" + "radius=" + radius + '}';
     }
 }
