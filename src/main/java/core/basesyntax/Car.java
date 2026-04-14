@@ -59,19 +59,20 @@ public final class Car {
     }
 
     public Car addWheel(Wheel newWheel) {
-        List<Wheel> newWheels = new ArrayList<>(wheels);
-        newWheels.add(new Wheel(newWheel.getRadius()));
+        List<Wheel> newWheels = new ArrayList<>();
+        for (Wheel w : wheels) {
+            newWheels.add(new Wheel(w.getRadius()));
+        }
+        if (newWheel != null) {
+            newWheels.add(new Wheel(newWheel.getRadius()));
+        }
         return new Car(year, color, newWheels, engine);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Car)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Car)) return false;
         Car car = (Car) o;
         return year == car.year
                 && Objects.equals(color, car.color)
