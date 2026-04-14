@@ -11,21 +11,21 @@ public final class Car {
     private final Engine engine;
 
     public Car(int year, String color, List<Wheel> wheels, Engine engine) {
+        if (wheels == null) {
+            throw new NullPointerException("wheels cannot be null");
+        }
+
         this.year = year;
         this.color = color;
         this.wheels = new ArrayList<>();
 
-        if (wheels != null) {
-            for (Wheel wheel : wheels) {
-                if (wheel != null) {
-                    this.wheels.add(new Wheel(wheel.getRadius()));
-                }
+        for (Wheel wheel : wheels) {
+            if (wheel != null) {
+                this.wheels.add(wheel.clone());
             }
         }
 
-        this.engine = engine == null
-                ? null
-                : new Engine(engine.getHorsePower(), engine.getManufacturer());
+        this.engine = engine == null ? null : engine.clone();
     }
 
     public int getYear() {
@@ -37,15 +37,13 @@ public final class Car {
     }
 
     public Engine getEngine() {
-        return engine == null
-                ? null
-                : new Engine(engine.getHorsePower(), engine.getManufacturer());
+        return engine == null ? null : engine.clone();
     }
 
     public List<Wheel> getWheels() {
         List<Wheel> copy = new ArrayList<>();
         for (Wheel wheel : wheels) {
-            copy.add(new Wheel(wheel.getRadius()));
+            copy.add(wheel.clone());
         }
         return copy;
     }
@@ -59,9 +57,9 @@ public final class Car {
     }
 
     public Car addWheel(Wheel newWheel) {
-        List<Wheel> newWheels = new ArrayList<>(wheels);
+        List<Wheel> newWheels = getWheels();
         if (newWheel != null) {
-            newWheels.add(new Wheel(newWheel.getRadius()));
+            newWheels.add(newWheel.clone());
         }
         return new Car(year, color, newWheels, engine);
     }
